@@ -50,16 +50,21 @@ export class MyApp extends LitElement {
     <nav>
       <a href="/home">HOME</a>
       <a href="/login">LOGIN</a>
+      <a href="/product">PRODUCT</a>
     </nav>
     <main role="main" class="main-content">
       <index-view class="page" ?active="${this._page === 'index-view'}"></index-view>
       <login-view class="page" ?active="${this._page === 'login-view'}"></login-view>
+      <product-view class="page" ?active="${this._page === 'product-view'}"></product-view>
     </main>
     `;
   }
 
   firstUpdated() {
-    installRouter((location) => navigate(decodeURIComponent(location.pathname)));
+    installRouter(async (location) => {
+      const results = await navigate(decodeURIComponent(location.pathname));
+      console.log('results', results);
+    });
   }
 
 

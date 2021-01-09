@@ -6,19 +6,19 @@ import { LitElement, html, customElement, css } from 'lit-element';
  * @slot - This element has a slot
  * @csspart button - The button
  */
-@customElement('login-view')
-export class LoginView extends LitElement {
+@customElement('signup-view')
+export class SignupView extends LitElement {
   static styles = css``;
 
   render() {
     return html`
-      <h1>LOGIN</h1>
+      <h1>signup</h1>
     `;
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'login-view': LoginView;
+    'signup-view': SignupView;
   }
 }
