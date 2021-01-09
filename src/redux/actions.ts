@@ -1,6 +1,5 @@
-import { TemplateResult } from "lit-element";
 import { routes } from "../routes";
-import { RouteObj } from "./types";
+import { GenericObject, RouteObj } from "./types";
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 
 
@@ -14,22 +13,31 @@ export const pushState = (page: string) => (dispatch: any) => {
   dispatch(navigate(window.location));
 };
 
-const loadPage = (page: string) => (dispatch: any) => {
-  const results = routes.find((route: RouteObj): boolean => route.pathRegexp.test(page));
+const loadPage = (path: string) => (dispatch: any) => {
+  const results = routes.find((route: RouteObj): boolean => route.pathRegexp.test(path));
   if (!results) {
     // TODO: handle 404
     return;
   }
+
+  // Load the component
   results.component();
-  dispatch(updatePage(results.view));
+  let params = {};
+  if (results.keys?.length) {
+    const matched = results.pathRegexp.exec(path) as string[];
+    params = results.keys.reduce((output, key: GenericObject, index: number) => {
+      output[key.name] = matched[index + 1];
+      return output;
+    }, {});
+  }
+  dispatch(updatePage({ view: results.view, params }));
 };
 
-const updatePage = (view: TemplateResult) => {
-  return {
-    type: UPDATE_PAGE,
-    view
-  };
-};
+const updatePage = ({ view, params }: GenericObject) => ({
+  type: UPDATE_PAGE,
+  view,
+  params,
+});
 
 
 

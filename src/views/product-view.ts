@@ -1,6 +1,9 @@
 import { LitElement, html, customElement, css, property } from 'lit-element';
 import db from '../data/db';
 
+import { connect } from 'pwa-helpers';
+import { store } from '../redux/store';
+
 /**
  * An example element.
  *
@@ -8,7 +11,7 @@ import db from '../data/db';
  * @csspart button - The button
  */
 @customElement('product-view')
-export class ProductView extends LitElement {
+export class ProductView extends connect(store)(LitElement) {
   static styles = css``;
 
   @property()
@@ -22,6 +25,10 @@ export class ProductView extends LitElement {
       >
       </app-product>
     `;
+  }
+
+  stateChanged(state: any) {
+    this.productId = state.params?.id;
   }
 }
 

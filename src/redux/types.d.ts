@@ -1,7 +1,8 @@
 import { TemplateResult } from "lit-element";
 
 interface State {
-  currentView: string;
+  currentView: TemplateResult;
+  params?: GenericObject;
 }
 
 type GenericObject = {
@@ -13,4 +14,5 @@ type RouteObj = {
   component: () => {};
   pathRegexp: RegExp;
   view: TemplateResult;
+  keys: any[];
 };

@@ -16,6 +16,7 @@ import { LitElement, html, customElement, property, css } from 'lit-element';
 import { installRouter, connect } from 'pwa-helpers';
 import { store } from './redux/store';
 import { navigate } from './redux/actions';
+import { defaultView } from './routes';
 
 import './components';
 
@@ -42,7 +43,7 @@ export class MyApp extends connect(store)(LitElement) {
   name = 'World';
 
   @property()
-  private currentView = html`<home-view></home-view>`;
+  private currentView = defaultView;
 
 
   render() {

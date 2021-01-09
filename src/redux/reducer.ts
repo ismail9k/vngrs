@@ -1,8 +1,11 @@
 import { AnyAction } from "redux";
 import { State } from "./types";
 
+import { defaultView } from '../routes';
+
 const INITIAL_STATE: State = {
-  currentView: "home-view"
+  currentView: defaultView,
+  params: {},
 };
 
 
@@ -12,6 +15,7 @@ export const reducer = (state: State = INITIAL_STATE, action: AnyAction): State 
       return {
         ...state,
         currentView: action.view,
+        params: action.params,
       };
     default:
       return state;
