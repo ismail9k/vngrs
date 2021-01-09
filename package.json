@@ -28,6 +28,7 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "lit-element": "^2.3.1",
+    "path-to-regexp": "^6.2.0",
     "pwa-helpers": "^0.9.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"

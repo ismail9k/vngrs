@@ -10,7 +10,7 @@ export const reducer = (state: State = INITIAL_STATE, action: AnyAction): State 
     case 'UPDATE_PAGE':
       return {
         ...state,
-        currentView: action.page,
+        currentView: action.view,
       };
     default:
       return state;

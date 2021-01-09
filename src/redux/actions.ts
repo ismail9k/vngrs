@@ -1,38 +1,35 @@
+import { TemplateResult } from "lit-element";
+import { routes } from "../routes";
+import { RouteObj } from "./types";
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 
 
-export const navigate = (page: string) => (dispatch: any) => {
+export const navigate = (location: { pathname: string; }) => (dispatch: any) => {
+  const page = decodeURIComponent(location.pathname);
   dispatch(loadPage(page));
 };
 
 export const pushState = (page: string) => (dispatch: any) => {
-  console.log('page', page);
   window.history.pushState({}, '', page);
-  dispatch(navigate(page));
+  dispatch(navigate(window.location));
 };
 
 const loadPage = (page: string) => (dispatch: any) => {
-  switch (page) {
-    case '/signup':
-      import('../views/signup-view');
-      break;
-
-    case '/product':
-      import('../views/product-view');
-      break;
-
-    case '/':
-    case '/home':
-      import('../views/home-view');
-      break;
+  const results = routes.find((route: RouteObj): boolean => route.pathRegexp.test(page));
+  if (!results) {
+    // TODO: handle 404
+    return;
   }
-
-  dispatch(updatePage(page));
+  results.component();
+  dispatch(updatePage(results.view));
 };
 
-const updatePage = (page: string) => {
+const updatePage = (view: TemplateResult) => {
   return {
     type: UPDATE_PAGE,
-    page
+    view
   };
 };
+
+
+

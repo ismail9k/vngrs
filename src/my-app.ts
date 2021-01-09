@@ -12,10 +12,11 @@
  * http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html, customElement, property, css, TemplateResult } from 'lit-element';
+import { LitElement, html, customElement, property, css } from 'lit-element';
 import { installRouter, connect } from 'pwa-helpers';
 import { store } from './redux/store';
 import { navigate } from './redux/actions';
+import { route } from './routes';
 
 import './components';
 
@@ -42,7 +43,7 @@ export class MyApp extends connect(store)(LitElement) {
   name = 'World';
 
   @property()
-  private _page = 'index-view';
+  private currentView = html`<home-view></home-view>`;
 
 
   render() {
@@ -52,33 +53,18 @@ export class MyApp extends connect(store)(LitElement) {
       <a href="/home">HOME</a>
     </nav>
     <main role="main" class="main-content">
-      ${this.getCurrentView()}
+      ${this.currentView}
     </main>
     `;
   }
 
   firstUpdated() {
     // @ts-ignore
-    installRouter((location) => store.dispatch(navigate(decodeURIComponent(location.pathname))));
+    installRouter((location) => store.dispatch(navigate(location)));
   }
 
-  stateChanged(state: State) {
-    this._page = state.currentView;
-  }
-
-  getCurrentView(): TemplateResult {
-    const page = this._page as string;
-    const routes: GenericObject = {
-      '': html`<home-view active="${true}"></home-view>`,
-      '/': html`<home-view active="${true}"></home-view>`,
-      '/home': html`<home-view active="${true}"></home-view>`,
-      '/product': html`<product-view active="${true}"></product-view>`,
-      '/signup': html`<signup-view active="${true}"></signup-view>`,
-    };
-    if (!Object.keys(routes).includes(page)) {
-      return html`<notfound-view></notfound-view>`;
-    }
-    return routes[page];
+  stateChanged(state: any) {
+    this.currentView = state.currentView;
   }
 }
 

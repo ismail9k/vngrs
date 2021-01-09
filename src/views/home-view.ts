@@ -36,8 +36,8 @@ export class HomeView extends LitElement {
     `;
   }
 
-  handleRouting(id) {
-    store.dispatch(pushState('/product'));
+  handleRouting(id: number) {
+    store.dispatch(pushState(`/product/${id}`));
   }
 }
 
