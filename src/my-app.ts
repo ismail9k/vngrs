@@ -12,9 +12,10 @@
  * http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html, customElement, property, css } from 'lit-element';
-import { installRouter } from 'pwa-helpers/router.js';
-import { navigate } from './router';
+import { LitElement, html, customElement, property, css, TemplateResult } from 'lit-element';
+import { installRouter, connect } from 'pwa-helpers';
+import { store } from './redux/store';
+import { navigate } from './redux/actions';
 
 /**
  * An example element.
@@ -23,7 +24,7 @@ import { navigate } from './router';
  * @csspart button - The button
  */
 @customElement('my-app')
-export class MyApp extends LitElement {
+export class MyApp extends connect(store)(LitElement) {
   static styles = css`
     :host {
       display: block;
@@ -33,44 +34,50 @@ export class MyApp extends LitElement {
     }
   `;
 
-  /**
-   * The name to say "Hello" to.
-   */
+
   @property()
   name = 'World';
 
-  /**
-   * The number of times the button has been clicked.
-   */
-  @property({ type: Number })
-  count = 0;
+  @property()
+  private _page = 'index-view';
+
 
   render() {
+
     return html`
     <nav>
       <a href="/home">HOME</a>
-      <a href="/login">LOGIN</a>
+      <a href="/signup">signup</a>
       <a href="/product">PRODUCT</a>
     </nav>
     <main role="main" class="main-content">
-      <index-view class="page" ?active="${this._page === 'index-view'}"></index-view>
-      <login-view class="page" ?active="${this._page === 'login-view'}"></login-view>
-      <product-view class="page" ?active="${this._page === 'product-view'}"></product-view>
+      ${this.getCurrentView()}
     </main>
     `;
   }
 
   firstUpdated() {
-    installRouter(async (location) => {
-      const results = await navigate(decodeURIComponent(location.pathname));
-      console.log('results', results);
-    });
+    // @ts-ignore
+    installRouter((location) => store.dispatch(navigate(decodeURIComponent(location.pathname))));
   }
 
+  stateChanged(state: State) {
+    this._page = state.currentView;
+  }
 
-  private _page = 'index-view';
-  foo(): string {
-    return 'foo';
+  getCurrentView(): TemplateResult {
+    const page = this._page as string;
+    const routes: GenericObject = {
+      '': html`<home-view active="${true}"></home-view>`,
+      '/': html`<home-view active="${true}"></home-view>`,
+      '/home': html`<home-view active="${true}"></home-view>`,
+      '/product': html`<product-view active="${true}"></product-view>`,
+      '/signup': html`<signup-view active="${true}"></signup-view>`,
+    };
+    if (!Object.keys(routes).includes(page)) {
+      return html`<notfound-view></notfound-view>`;
+    }
+    return routes[page];
   }
 }
 

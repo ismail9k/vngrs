@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "module": "esnext", // add this line
+    "module": "esnext",
     "lib": ["es2017", "dom", "dom.iterable"],
     "declaration": true,
     "declarationMap": true,
@@ -25,5 +25,5 @@
     ]
   },
   "include": ["src/**/*.ts"],
-  "exclude": []
+  "exclude": ["test"]
 }

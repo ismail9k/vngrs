@@ -18,6 +18,14 @@
   <my-app>
     <p>Loading...</p>
   </my-app>
+<script>
+  // HACK to overcome the redux issue process not found
+  window.process = {
+    env: {
+      NODE_ENV: 'production'
+    }
+  };
+</script>
 </body>
 
 </html>
