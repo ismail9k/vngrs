@@ -1,4 +1,5 @@
 import { AnyAction } from "redux";
+import { State } from "./types";
 
 const INITIAL_STATE: State = {
   currentView: "home-view"

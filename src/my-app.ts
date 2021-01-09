@@ -16,7 +16,6 @@ import { LitElement, html, customElement, property, css } from 'lit-element';
 import { installRouter, connect } from 'pwa-helpers';
 import { store } from './redux/store';
 import { navigate } from './redux/actions';
-import { route } from './routes';
 
 import './components';
 

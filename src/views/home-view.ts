@@ -1,6 +1,7 @@
 import { LitElement, html, customElement, css } from 'lit-element';
 import { pushState } from '../redux/actions';
 import { store } from '../redux/store';
+import { GenericObject } from '../redux/types';
 
 import db from '../data/db';
 
@@ -37,6 +38,7 @@ export class HomeView extends LitElement {
   }
 
   handleRouting(id: number) {
+    // @ts-ignore
     store.dispatch(pushState(`/product/${id}`));
   }
 }

@@ -1,4 +1,5 @@
 import { LitElement, html, customElement, css, property } from 'lit-element';
+import { GenericObject } from '../redux/types';
 
 /**
  * An example element.
