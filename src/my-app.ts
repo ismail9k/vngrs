@@ -36,6 +36,9 @@ export class MyApp extends connect(store)(LitElement) {
     * {
       box-sizing: border-box;
     }
+    .main-content {
+      margin-top: 60px;
+    }
   `;
 
 
@@ -49,9 +52,6 @@ export class MyApp extends connect(store)(LitElement) {
   render() {
 
     return html`
-    <nav>
-      <a href="/home">HOME</a>
-    </nav>
     <main role="main" class="main-content">
       ${this.currentView}
     </main>

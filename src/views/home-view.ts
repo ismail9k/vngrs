@@ -24,8 +24,10 @@ export class HomeView extends LitElement {
 
   render() {
     return html`
+      <app-header>
+        <a href="/signup">Logout</a>
+      </app-header>
       <h1>Home</h1>
-
       <div class="gallery">
         ${[...db.products].splice(0, 12).map((item: GenericObject, index: number) => {
           return html`<app-product

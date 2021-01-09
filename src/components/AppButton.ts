@@ -1,4 +1,4 @@
-import { LitElement, html, customElement, css } from 'lit-element';
+import { LitElement, html, customElement, css, property } from 'lit-element';
 
 /**
  * An example element.
@@ -36,10 +36,23 @@ export class AppButton extends LitElement {
     }
   `;
 
+  @property()
+  type = '';
+
   render() {
     return html`
-      <button class="button"><slot></slot></button>
+      <button
+        class="button"
+        type="${this.type}"
+        @click="${this._handleClick}"
+      >
+        <slot></slot>
+      </button>
     `;
+  }
+
+  private _handleClick() {
+    this.dispatchEvent(new Event('click'));
   }
 }
 
