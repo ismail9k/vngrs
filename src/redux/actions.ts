@@ -22,13 +22,14 @@ const loadPage = (path: string) => (dispatch: any) => {
 
   // Load the component
   results.component();
-  let params = {};
+  const params = {};
+
   if (results.keys?.length) {
     const matched = results.pathRegexp.exec(path) as string[];
-    params = results.keys.reduce((output, key: GenericObject, index: number) => {
+    results.keys.reduce((output, key: GenericObject, index: number) => {
       output[key.name] = matched[index + 1];
       return output;
-    }, {});
+    }, params);
   }
   dispatch(updatePage({ view: results.view, params }));
 };
