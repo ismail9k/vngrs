@@ -2,8 +2,8 @@
   "version": "experimental",
   "tags": [
     {
-      "name": "my-element",
-      "path": "./src/my-element.ts",
+      "name": "my-app",
+      "path": "./src/my-app.ts",
       "description": "An example element.",
       "attributes": [
         {
