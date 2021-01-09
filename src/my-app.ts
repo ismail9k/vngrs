@@ -17,6 +17,8 @@ import { installRouter, connect } from 'pwa-helpers';
 import { store } from './redux/store';
 import { navigate } from './redux/actions';
 
+import './components';
+
 /**
  * An example element.
  *
@@ -28,9 +30,10 @@ export class MyApp extends connect(store)(LitElement) {
   static styles = css`
     :host {
       display: block;
-      border: solid 1px gray;
-      padding: 16px;
-      max-width: 800px;
+      padding: 20px;
+    }
+    * {
+      box-sizing: border-box;
     }
   `;
 
@@ -47,8 +50,6 @@ export class MyApp extends connect(store)(LitElement) {
     return html`
     <nav>
       <a href="/home">HOME</a>
-      <a href="/signup">signup</a>
-      <a href="/product">PRODUCT</a>
     </nav>
     <main role="main" class="main-content">
       ${this.getCurrentView()}

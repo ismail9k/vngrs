@@ -5,6 +5,12 @@ export const navigate = (page: string) => (dispatch: any) => {
   dispatch(loadPage(page));
 };
 
+export const pushState = (page: string) => (dispatch: any) => {
+  console.log('page', page);
+  window.history.pushState({}, '', page);
+  dispatch(navigate(page));
+};
+
 const loadPage = (page: string) => (dispatch: any) => {
   switch (page) {
     case '/signup':

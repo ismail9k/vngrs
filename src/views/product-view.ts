@@ -1,4 +1,5 @@
-import { LitElement, html, customElement, css } from 'lit-element';
+import { LitElement, html, customElement, css, property } from 'lit-element';
+import db from '../data/db';
 
 /**
  * An example element.
@@ -10,9 +11,16 @@ import { LitElement, html, customElement, css } from 'lit-element';
 export class ProductView extends LitElement {
   static styles = css``;
 
+  @property()
+  productId = 1;
+
   render() {
     return html`
       <h1>Product</h1>
+      <app-product
+        .data="${db.products[this.productId]}"
+      >
+      </app-product>
     `;
   }
 }
