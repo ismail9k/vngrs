@@ -13,7 +13,7 @@
     "lint:lit-analyzer": "lit-analyzer",
     "format": "prettier src/* --write",
     "serve": "es-dev-server --node-resolve --watch --app-index=index.html",
-    "serve:db": "firebase emulators:start",
+    "firebase": "firebase emulators:start",
     "test": "mocha --exit"
   },
   "keywords": [
@@ -29,9 +29,7 @@
     "path-to-regexp": "^6.2.0",
     "pwa-helpers": "^0.9.1",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "firebase-admin": "^9.2.0",
-    "firebase-functions": "^3.11.0"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^2.3.1",
@@ -50,9 +48,6 @@
     "rollup-plugin-filesize": "^7.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^5.3.0",
-    "typescript": "^3.8.3",
-    "web-component-analyzer": "^1.0.3",
-    "eslint-plugin-import": "^2.22.0",
-    "firebase-functions-test": "^0.2.0"
+    "typescript": "^3.8.3"
   }
 }

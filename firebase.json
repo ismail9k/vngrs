@@ -1,4 +1,7 @@
 {
+  "database": {
+    "rules": "database.rules.json"
+  },
   "firestore": {
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
@@ -9,5 +12,18 @@
       "npm --prefix \"$RESOURCE_DIR\" run build"
     ]
   },
-  "emulators": {}
+  "emulators": {
+    "auth": {
+      "port": 4040
+    },
+    "functions": {
+      "port": 5050
+    },
+    "firestore": {
+      "port": 6060
+    },
+    "ui": {
+      "enabled": true
+    }
+  }
 }
