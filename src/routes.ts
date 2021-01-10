@@ -18,6 +18,7 @@ export const routes: RouteObj[] = (() => {
     },
     {
       path: '/signup',
+      isPublic: true,
       component: () => import('./views/signup-view'),
       view: html`<signup-view></signup-view>`,
     },

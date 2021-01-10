@@ -2,7 +2,11 @@ import { TemplateResult } from "lit-element";
 
 interface State {
   currentView: TemplateResult;
-  params?: GenericObject;
+  route: Partial<RouteObj>;
+  params: GenericObject;
+  user: GenericObject | undefined | null;
+  isLoading: boolean;
+  view?: TemplateResult;
 }
 
 type GenericObject = {
@@ -13,6 +17,7 @@ type RouteObj = {
   path: string;
   component: () => {};
   pathRegexp: RegExp;
+  isPublic: boolean;
   view: TemplateResult;
   keys: any[];
 };

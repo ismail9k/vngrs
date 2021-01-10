@@ -1,6 +1,8 @@
 import firebase from "firebase";
 import { GenericObject } from "./redux/types";
-
+import { store } from './redux/store';
+import { updateUser, updateLoading } from './redux/actions';
+import { sanitizeData } from "./utils";
 // TODO: add data to env variables
 const PROJECT_ID = 'vngrs-c5a55';
 const API_KEY = 'AIzaSyBolveIjvaNSjUz0zLyR0TYU28Q9s74BVQ';
@@ -19,12 +21,18 @@ const firebaseConfig: GenericObject = {
 
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+
 // Wait until app init
 const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-  // TODO: handle your logic here
+  if (user) {
+    const userData = sanitizeData(['email'], user);
+    store.dispatch(updateUser({ user: userData }));
+  }
+  store.dispatch(updateLoading({ isLoading: false }));
   // unsubscribe from watching auth
   unsubscribe();
 });
+
 
 if (location.hostname === 'localhost') {
   console.log('localhost detected!');

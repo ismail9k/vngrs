@@ -15,7 +15,7 @@
 import { LitElement, html, customElement, property, css } from 'lit-element';
 import { installRouter, connect } from 'pwa-helpers';
 import { store } from './redux/store';
-import { navigate } from './redux/actions';
+import { navigate, pushState } from './redux/actions';
 import { defaultView } from './routes';
 
 import './components';
@@ -42,17 +42,23 @@ export class MyApp extends connect(store)(LitElement) {
   `;
 
 
-  @property()
-  name = 'World';
+  @property({ type: Boolean })
+  private isLoading = true;
 
   @property()
   private currentView = defaultView;
 
+  @property({ type: Object })
+  private currentUser: any = undefined;
+
 
   render() {
-
+    if (this.isLoading) {
+      return html`<span>Loading...</span>`;
+    }
     return html`
     <main role="main" class="main-content">
+      ${this.currentUser?.email}
       ${this.currentView}
     </main>
     `;
@@ -64,7 +70,15 @@ export class MyApp extends connect(store)(LitElement) {
   }
 
   stateChanged(state: any) {
+    console.log('state', state);
     this.currentView = state.currentView;
+    this.currentUser = state.user;
+    this.isLoading = state.isLoading;
+
+    if (!(state.isLoading || state.user || state.route?.isPublic)) {
+      // @ts-ignore
+      store.dispatch(pushState(`/signup`));
+    }
   }
 }
 

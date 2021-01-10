@@ -1,7 +1,8 @@
 import firebase from 'firebase';
 import { LitElement, html, customElement, css, property } from 'lit-element';
-import { pushState } from '../redux/actions';
+import { pushState, updateUser } from '../redux/actions';
 import { store } from '../redux/store';
+import { sanitizeData } from '../utils';
 
 /**
  * An example element.
@@ -46,7 +47,8 @@ export class SignupView extends LitElement {
   handleSubmit() {
     firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
       .then((user) => {
-        console.log('user', user);
+        const userData = sanitizeData(['email'], user);
+        store.dispatch(updateUser({ user: userData }));
         // @ts-ignore
         store.dispatch(pushState(`/home`));
       })

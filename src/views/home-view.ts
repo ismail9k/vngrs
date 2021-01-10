@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import { LitElement, html, customElement, css } from 'lit-element';
-import { pushState } from '../redux/actions';
+import { pushState, updateUser } from '../redux/actions';
 import { store } from '../redux/store';
 import { GenericObject } from '../redux/types';
 
@@ -42,6 +42,7 @@ export class HomeView extends LitElement {
 
   handleLogout() {
     firebase.auth().signOut().then(() => {
+      store.dispatch(updateUser({ user: undefined }));
       // @ts-ignore
       store.dispatch(pushState(`/signup`));
     }).catch((error) => {
