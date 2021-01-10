@@ -6,7 +6,7 @@ const PROJECT_ID = 'vngrs-c5a55';
 const API_KEY = 'AIzaSyBolveIjvaNSjUz0zLyR0TYU28Q9s74BVQ';
 const APP_ID = '1:138237522562:web:f0b643be0b369388f67a9b';
 
-let firebaseConfig: GenericObject = {
+const firebaseConfig: GenericObject = {
   apiKey: API_KEY,
   authDomain: `${PROJECT_ID}.firebaseapp.com`,
   databaseURL: `https://${PROJECT_ID}.firebaseio.com`,
@@ -17,17 +17,20 @@ let firebaseConfig: GenericObject = {
   measurementId: "G-9ME06F6N51"
 };
 
-if (location.host === 'localhost') {
-  firebaseConfig = {
-    databaseURL: 'http://localhost:9000?ns=emulatorui',
-  };
-}
 
-firebase.initializeApp(firebaseConfig);
-
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 // Wait until app init
-const unsubscribe = firebase.auth().onAuthStateChanged(() => {
+const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
   // TODO: handle your logic here
   // unsubscribe from watching auth
   unsubscribe();
 });
+
+if (location.hostname === 'localhost') {
+  console.log('localhost detected!');
+  firebase.auth().useEmulator('http://localhost:4040/');
+  firebaseApp.firestore().settings({
+    host: 'localhost:9000',
+    ssl: false,
+  });
+}

@@ -1,9 +1,26 @@
 import * as functions from "firebase-functions";
+import * as admin from 'firebase-admin';
+import { sanitizeData } from "./utils";
 
-// Start writing Firebase Functions
-// https://firebase.google.com/docs/functions/typescript
+type User = {
+  uid: string;
+  email?: string;
+  emailVerified?: boolean;
+  admin?: boolean;
+};
 
-export const helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", { structuredData: true });
-  response.send("This really works!");
+admin.initializeApp();
+
+
+export const handleRegisteredUsers = functions.auth.user().onCreate((user) => {
+  // Create a shallow copy of user's data
+  const userData: User = { ...user };
+  const { email } = userData;
+  if (email?.includes('@vngrs.com')) {
+    userData.admin = true;
+  }
+  // Sanitize user data
+  const userDoc = sanitizeData(['uid', 'email', 'emailVerified', 'admin'], userData);
+  // Add the user to firestore
+  return admin.firestore().collection('users').doc(user.uid).set(userDoc);
 });

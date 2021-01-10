@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import { LitElement, html, customElement, css } from 'lit-element';
 import { pushState } from '../redux/actions';
 import { store } from '../redux/store';
@@ -25,7 +26,7 @@ export class HomeView extends LitElement {
   render() {
     return html`
       <app-header>
-        <a href="/signup">Logout</a>
+        <app-button @click="${this.handleLogout}">Logout</app-button>
       </app-header>
       <h1>Home</h1>
       <div class="gallery">
@@ -39,6 +40,15 @@ export class HomeView extends LitElement {
     `;
   }
 
+  handleLogout() {
+    firebase.auth().signOut().then(() => {
+      // @ts-ignore
+      store.dispatch(pushState(`/signup`));
+    }).catch((error) => {
+      // TODO: An error happened.
+    });
+
+  }
   handleRouting(id: number) {
     // @ts-ignore
     store.dispatch(pushState(`/product/${id}`));
