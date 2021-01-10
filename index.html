@@ -5,7 +5,6 @@
 <head>
   <meta charset="utf-8">
   <title>Demo</title>
-  <script type="module" src="/dist/my-app.js"></script>
   <style>
     * {
     box-sizing: border-box;
@@ -28,14 +27,15 @@
   <my-app>
     <p>Loading...</p>
   </my-app>
-<script>
-  // HACK to overcome the redux issue process not found
-  window.process = {
-    env: {
-      NODE_ENV: 'production'
-    }
-  };
-</script>
+  <script>
+    // HACK to overcome the redux issue process not found
+    window.process = {
+      env: {
+        NODE_ENV: 'production'
+      }
+    };
+  </script>
+<script type="module" src="/dist/index.js"></script>
 </body>
 
 </html>
