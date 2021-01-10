@@ -13,9 +13,8 @@
     "lint:lit-analyzer": "lit-analyzer",
     "format": "prettier src/* --write",
     "serve": "es-dev-server --node-resolve --watch --app-index=index.html",
-    "firebase": "firebase emulators:start",
-    "test": "mocha --exit",
-    "seed": "node --experimental-json-modules ./scripts/seed.js"
+    "firebase": "firebase emulators:start --import=seed",
+    "test": "mocha --exit"
   },
   "keywords": [
     "web-components",
