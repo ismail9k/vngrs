@@ -20,7 +20,7 @@
       "port": 5050
     },
     "firestore": {
-      "port": 6060
+      "port": 8080
     },
     "ui": {
       "enabled": true
