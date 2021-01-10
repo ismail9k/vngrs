@@ -17,7 +17,7 @@ type RouteObj = {
   path: string;
   component: () => {};
   pathRegexp: RegExp;
-  isPublic: boolean;
+  isPublic?: boolean;
   view: TemplateResult;
   keys: any[];
 };

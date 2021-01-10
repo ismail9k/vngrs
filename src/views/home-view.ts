@@ -1,6 +1,5 @@
-import firebase from 'firebase';
 import { LitElement, html, customElement, css } from 'lit-element';
-import { pushState, updateUser } from '../redux/actions';
+import { pushState } from '../redux/actions';
 import { store } from '../redux/store';
 import { GenericObject } from '../redux/types';
 
@@ -25,10 +24,7 @@ export class HomeView extends LitElement {
 
   render() {
     return html`
-      <app-header>
-        <app-button @click="${this.handleLogout}">Logout</app-button>
-      </app-header>
-      <h1>Home</h1>
+      <h2>Home</h2>
       <div class="gallery">
         ${[...db.products].splice(0, 12).map((item: GenericObject, index: number) => {
           return html`<app-product
@@ -40,17 +36,6 @@ export class HomeView extends LitElement {
     `;
   }
 
-  handleLogout() {
-    firebase.auth().signOut().then(() => {
-      store.dispatch(updateUser({ user: undefined }));
-      // @ts-ignore
-      store.dispatch(pushState(`/signup`));
-    }).catch((error) => {
-      console.error(error);
-      // TODO: An error happened.
-    });
-
-  }
   handleRouting(id: number) {
     // @ts-ignore
     store.dispatch(pushState(`/product/${id}`));

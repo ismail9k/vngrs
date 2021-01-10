@@ -12,20 +12,32 @@ import { sanitizeData } from '../utils';
  */
 @customElement('signup-view')
 export class SignupView extends LitElement {
-  static styles = css``;
+  static styles = css`
+    .login-form {
+      border: 1px solid var(--gray);
+      padding: 40px;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 8px;
+      box-shadow: 0 1px 10px rgba(85,85,85,0.2);
+    }
+  `;
 
   @property()
   email = '';
   @property()
   password = '';
   @property()
-  errors = ""
+  errors = "";
+  @property({ type: Boolean })
+  isSubmitting = false;
 
   render() {
     return html`
       <app-header></app-header>
       <h1>Sign up</h1>
-      <form>
+      <form class="login-form" @submit="${this.handleSubmit}">
         <app-input
           placeholder="Email"
           value="${this.email}"
@@ -39,14 +51,18 @@ export class SignupView extends LitElement {
           @input=${(event: any) => this.password = event.target.value}
         ></app-input>
 
-        <app-button type="submit" @click="${this.handleSubmit}">Submit</app-button>
+        <app-button @click="${this.handleSubmit}">Submit</app-button>
       </from>
       ${this.errors && html`<span>${this.errors}</span>`}
     `;
   }
-  handleSubmit() {
+  handleSubmit(event: Event) {
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+    event.preventDefault();
+
     firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-      .then((user) => {
+      .then(({ user }) => {
         const userData = sanitizeData(['email'], user);
         store.dispatch(updateUser({ user: userData }));
         // @ts-ignore
@@ -55,7 +71,7 @@ export class SignupView extends LitElement {
       .catch((error: Error) => {
         console.error(error);
         this.errors = error.message;
-      });
+      }).finally(() => (this.isSubmitting = false));
   }
 }
 

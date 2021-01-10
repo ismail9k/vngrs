@@ -12,12 +12,13 @@ export class AppProduct extends LitElement {
   static styles = css`
     * { box-sizing: border-box; }
     .product {
+      border: 1px solid var(--gray);
       display: flex;
       flex-direction: column;
       padding: 20px;
       width: 100%;
       height: 100%;
-      border-radius: 4px;
+      border-radius: 8px;
       box-shadow: 0 1px 10px rgba(85,85,85,0.2);
     }
     .product-image {

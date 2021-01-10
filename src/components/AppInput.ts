@@ -10,9 +10,14 @@ import { LitElement, html, customElement, css, property } from 'lit-element';
 export class AppInput extends LitElement {
   static styles = css`
     .input {
+      box-sizing: border-box;
       border: 1px solid var(--primary);
       border-radius: 5px;
       padding: 5px 10px;
+      margin-bottom: 10px;
+      font-size: 1em;
+      width: 100%;
+      display: inline-block;
     }
   `;
 

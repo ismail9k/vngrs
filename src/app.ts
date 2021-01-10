@@ -48,19 +48,15 @@ export class MyApp extends connect(store)(LitElement) {
   @property()
   private currentView = defaultView;
 
-  @property({ type: Object })
-  private currentUser: any = undefined;
-
-
   render() {
     if (this.isLoading) {
-      return html`<span>Loading...</span>`;
+      return html`<app-spinner></app-spinner>`;
     }
     return html`
-    <main role="main" class="main-content">
-      ${this.currentUser?.email}
-      ${this.currentView}
-    </main>
+      <app-header></app-header>
+      <main role="main" class="main-content">
+        ${this.currentView}
+      </main>
     `;
   }
 
@@ -70,9 +66,7 @@ export class MyApp extends connect(store)(LitElement) {
   }
 
   stateChanged(state: any) {
-    console.log('state', state);
     this.currentView = state.currentView;
-    this.currentUser = state.user;
     this.isLoading = state.isLoading;
 
     if (!(state.isLoading || state.user || state.route?.isPublic)) {

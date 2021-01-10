@@ -6,7 +6,8 @@
   "module": "my-app.js",
   "type": "module",
   "scripts": {
-    "dev": "npm run build:watch & npm run serve",
+    "dev": "npm run build:watch & npm run serve & npm run copy:styles",
+    "copy:styles": "cp ./src/styles.css ./dist/styles.css",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",

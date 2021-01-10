@@ -37,7 +37,7 @@ export class AppButton extends LitElement {
   `;
 
   @property()
-  type = '';
+  type: 'button' | 'submit' | 'reset' | 'menu' = 'button';
 
   render() {
     return html`

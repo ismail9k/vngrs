@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+:root {
+  --primary: #007fff;
+  --green: #36d9b0;
+  --green-dark: #06443c;
+  --green-darker: #022017;
+  --blue-dark: #34495e;
+  --grey: #d9deed;
+  --white: #fff;
+  --white-snow: #f7fafa;
+  --black: #1a1a1a;
+}
+.spinner {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--white);
+}
+.spinner:after {
+  display: block;
+  margin: 20px auto;
+  width: 64px;
+  height: 64px;
+  border: 4px var(--black) solid;
+  border-top: 4px var(--primary) solid;
+  border-radius: 50%;
+  content: '';
+  animation: circleRotate 0.6s infinite linear;
+}
+@keyframes circleRotate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}

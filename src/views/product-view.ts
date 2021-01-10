@@ -19,10 +19,7 @@ export class ProductView extends connect(store)(LitElement) {
 
   render() {
     return html`
-      <app-header>
-        <a href="/home">Home</a>
-      </app-header>
-      <h1>Product</h1>
+      <h2>${db.products[this.productId].name}</h2>
       <app-product
         .data="${db.products[this.productId]}"
       >

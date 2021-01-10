@@ -1,5 +1,8 @@
-import { LitElement, html, customElement, css } from 'lit-element';
-
+import firebase from 'firebase';
+import { LitElement, html, customElement, css, property } from 'lit-element';
+import { connect } from 'pwa-helpers';
+import { store } from '../redux/store';
+import { pushState, updateUser } from '../redux/actions';
 /**
  * An example element.
  *
@@ -7,7 +10,7 @@ import { LitElement, html, customElement, css } from 'lit-element';
  * @csspart button - The button
  */
 @customElement('app-header')
-export class AppHeader extends LitElement {
+export class AppHeader extends connect(store)(LitElement) {
   static styles = css`
     * { box-sizing: border-box }
     .header {
@@ -34,8 +37,26 @@ export class AppHeader extends LitElement {
       align-items: center;
     }
 
+    .header-user {
+      line-height: 30px;
+      margin: 0 10px;
+    }
     .header-brand {
-      margin-left: 0.5em;
+      margin-inline-end: 2em;
+      color: var(--primary);
+    }
+    .header-brand:hover {
+      color: var(--black);
+    }
+
+    .header-brand h1 {
+      font-size: 30px;
+      font-weight: bold;
+      margin: 0;
+    }
+    .header-end,
+    .header-start {
+      margin: 0 10px;
     }
     .header-end {
       display: flex;
@@ -44,20 +65,44 @@ export class AppHeader extends LitElement {
     }
   `;
 
+  @property({ type: Object })
+  private currentUser: any = undefined;
 
   render() {
     return html`
       <header class="header">
         <div class="header-container">
-          <div class="header-brand">
-            _Ismail9K
+          <a class="header-brand" href="/home">
+            <h1>Vngrs</h1>
+          </a>
+          <div class="header-start">
+            
           </div>
           <div class="header-end">
+            ${this.currentUser && html`
+              <span class="header-user">Hi ${this.currentUser?.email}</span>
+              <app-button @click="${this.handleLogout}">Logout</app-button>
+            `}
             <slot></slot>
           </div>
         </div>
-      </button>
+      </header>
     `;
+  }
+
+  stateChanged(state: any) {
+    this.currentUser = state.user;
+  }
+
+  handleLogout() {
+    firebase.auth().signOut().then(() => {
+      store.dispatch(updateUser({ user: undefined }));
+      // @ts-ignore
+      store.dispatch(pushState(`/signup`));
+    }).catch((error) => {
+      console.error(error);
+      // TODO: An error happened.
+    });
   }
 
 }
