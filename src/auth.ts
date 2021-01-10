@@ -30,7 +30,7 @@ if (location.hostname === 'localhost') {
   console.log('localhost detected!');
   firebase.auth().useEmulator('http://localhost:4040/');
   firebaseApp.firestore().settings({
-    host: 'localhost:9000',
+    host: 'localhost:6060',
     ssl: false,
   });
 }

@@ -45,6 +45,7 @@ export class HomeView extends LitElement {
       // @ts-ignore
       store.dispatch(pushState(`/signup`));
     }).catch((error) => {
+      console.error(error);
       // TODO: An error happened.
     });
 
