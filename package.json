@@ -6,14 +6,16 @@
   "module": "my-app.js",
   "type": "module",
   "scripts": {
+    "dev": "npm run build:watch & npm run serve",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint 'src/**/*.ts'",
     "lint:lit-analyzer": "lit-analyzer",
     "format": "prettier src/* --write",
-    "serve": "es-dev-server --node-resolve --watch --app-index=index.html",
-    "firebase": "firebase emulators:start --import=seed",
+    "serve": "npm run serve:frontend & npm run serve:backend",
+    "serve:frontend": "es-dev-server --node-resolve --watch --app-index=index.html",
+    "serve:backend": "firebase emulators:start --import=seed",
     "test": "mocha --exit"
   },
   "keywords": [
