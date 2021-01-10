@@ -1,8 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from 'firebase-admin';
 import { sanitizeData } from "./utils";
-import * as express from "express";
-const app = express()
 
 type User = {
   uid: string;
