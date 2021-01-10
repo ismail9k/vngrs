@@ -6,8 +6,7 @@
   "module": "my-app.js",
   "type": "module",
   "scripts": {
-    "dev": "npm run build:watch & npm run serve & npm run copy:styles",
-    "copy:styles": "cp ./src/styles.css ./dist/styles.css",
+    "dev": "npm run build:watch && npm run serve",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
@@ -16,7 +15,7 @@
     "format": "prettier src/* --write",
     "serve": "npm run serve:frontend & npm run serve:backend",
     "serve:frontend": "es-dev-server --node-resolve --watch --app-index=index.html",
-    "serve:backend": "firebase emulators:start --import=seed",
+    "serve:backend": "firebase emulators:start",
     "test": "mocha --exit"
   },
   "keywords": [
